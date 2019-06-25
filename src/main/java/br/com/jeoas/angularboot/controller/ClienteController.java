@@ -23,8 +23,9 @@ import br.com.jeoas.angularboot.service.ClienteService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestController(value = "/clientes")
-public class ClienteController {
+@RestController
+@RequestMapping(value = "/clientes")
+public class ClienteController { 
 
 	@Autowired
 	private ClienteService clienteService;
@@ -35,7 +36,7 @@ public class ClienteController {
 		return new ResponseEntity<Collection<Cliente>>(clientes, OK);
 	}
 
-	@RequestMapping(method = GET, value = "/clientes/{id}", produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(method = GET, value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Cliente> consultarCliente(@PathVariable Integer id) {
 		log.info("consultando cliente");
 		
@@ -54,7 +55,7 @@ public class ClienteController {
 		return new ResponseEntity<Cliente>(cliente, OK);
 	}
 
-	@RequestMapping(method = DELETE, value = "/clientes/{id}")
+	@RequestMapping(method = DELETE, value = "/{id}")
 	public ResponseEntity<Cliente> remover(@PathVariable Integer id) {
 		log.info("removendo cliente");
 
