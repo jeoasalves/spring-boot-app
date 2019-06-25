@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.jeoas.angularboot.bean.Cliente;
+import br.com.jeoas.angularboot.entity.Cliente;
 import br.com.jeoas.angularboot.repository.ClienteRepository;
 
 @Service 
@@ -41,9 +41,10 @@ public class ClienteService {
 		
 		if(optional.isPresent()) {
 			clienteRepository.delete(new Cliente(id));
+			
+		}else {
+			throw new Exception();
 		}
- 		
-		throw new Exception();
 	} 
 
 	public Cliente atualizarCliente(Cliente cliente) throws Exception {

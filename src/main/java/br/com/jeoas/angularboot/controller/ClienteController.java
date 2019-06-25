@@ -16,24 +16,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.jeoas.angularboot.bean.Cliente;
+import br.com.jeoas.angularboot.entity.Cliente;
 import br.com.jeoas.angularboot.service.ClienteService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestController
+@RestController(value = "/clientes")
 public class ClienteController {
 
 	@Autowired
 	private ClienteService clienteService;
 
-	@RequestMapping(method = GET, value = "/clientes", produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(method = GET, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<Cliente>> listarClientes() {
 		Collection<Cliente> clientes = clienteService.listarClientes();
 		return new ResponseEntity<Collection<Cliente>>(clientes, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = GET, value = "/cliente/{id}", produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(method = GET, value = "/clientes/{id}", produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Cliente> consultarCliente(@PathVariable Integer id) {
 		log.info("consultando cliente");
 		
@@ -45,14 +45,14 @@ public class ClienteController {
 		}
 	} 
 
-	@RequestMapping(method = POST, value = "/cliente", consumes = APPLICATION_JSON_VALUE)
+	@RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
 	private ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
 		log.info("cadastrando cliente");
 		cliente = clienteService.cadastrar(cliente);
 		return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = DELETE, value = "/cliente/{id}")
+	@RequestMapping(method = DELETE, value = "/clientes/{id}")
 	public ResponseEntity<Cliente> remover(@PathVariable Integer id) {
 		log.info("removendo cliente");
 
@@ -62,9 +62,9 @@ public class ClienteController {
 		} catch (Exception ex) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-	}
+	} 
 
-	@RequestMapping(method = PUT, value = "/cliente", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Cliente> atualizar(@RequestBody Cliente cliente) {
 		log.info("atualizando cliente");
 

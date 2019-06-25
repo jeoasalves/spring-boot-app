@@ -1,4 +1,4 @@
-package br.com.jeoas.angularboot.bean;
+package br.com.jeoas.angularboot.entity;
 
 import java.io.Serializable;
 
