@@ -16,17 +16,17 @@ public class ClienteService {
 	@Autowired
 	ClienteRepository clienteRepository;
 
-	public Cliente cadastrar(Cliente cliente) {
+	public Cliente salvar(Cliente cliente) {
 		cliente = clienteRepository.save(cliente);
 		
 		return cliente;
 	}
 	 
-	public Collection<Cliente> listarClientes() {
+	public Collection<Cliente> listar() {
 		return clienteRepository.findAll();
 	}
 
-	public Cliente consultarCliente(Integer id) throws ServiceException {
+	public Cliente consultar(Integer id) throws ServiceException {
 		Optional<Cliente> optional = clienteRepository.findById(id);
 		
 		if(optional.isPresent()) {
@@ -37,7 +37,7 @@ public class ClienteService {
 	}
 	
 	
-	public void removerCliente(Integer id) throws ServiceException {
+	public void remover(Integer id) throws ServiceException {
 		if(clienteRepository.existsById(id)) {
 			clienteRepository.deleteById(id);
 		}else {
@@ -45,7 +45,7 @@ public class ClienteService {
 		}
 	} 
 
-	public Cliente atualizarCliente(Cliente cliente) throws ServiceException {
+	public Cliente atualizar(Cliente cliente) throws ServiceException {
 		Optional<Cliente> optional = clienteRepository.findById(cliente.getId());
 		
 		if(optional.isPresent()) {

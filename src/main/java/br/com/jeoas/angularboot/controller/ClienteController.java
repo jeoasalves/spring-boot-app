@@ -25,33 +25,34 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping(value = "/clientes")
-public class ClienteController { 
+public class ClienteController {
 
 	@Autowired
 	private ClienteService clienteService;
 
 	@RequestMapping(method = GET, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<Cliente>> listarClientes() {
-		Collection<Cliente> clientes = clienteService.listarClientes();
+	public ResponseEntity<Collection<Cliente>> listar() {
+		log.info("listando clientes");
+		Collection<Cliente> clientes = clienteService.listar();
 		return new ResponseEntity<Collection<Cliente>>(clientes, OK);
 	}
 
 	@RequestMapping(method = GET, value = "/{id}", produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<Cliente> consultarCliente(@PathVariable Integer id) {
+	public ResponseEntity<Cliente> consultar(@PathVariable Integer id) {
 		log.info("consultando cliente");
-		
+
 		try {
-			Cliente cliente = clienteService.consultarCliente(id);
+			Cliente cliente = clienteService.consultar(id);
 			return new ResponseEntity<Cliente>(cliente, OK);
 		} catch (ServiceException ex) {
 			return new ResponseEntity<>(NOT_FOUND);
 		}
-	} 
+	}
 
 	@RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
-	private ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
-		log.info("cadastrando cliente");
-		cliente = clienteService.cadastrar(cliente);
+	private ResponseEntity<Cliente> salvar(@RequestBody Cliente cliente) {
+		log.info("salvando cliente");
+		cliente = clienteService.salvar(cliente);
 		return new ResponseEntity<Cliente>(cliente, OK);
 	}
 
@@ -60,19 +61,19 @@ public class ClienteController {
 		log.info("removendo cliente");
 
 		try {
-			clienteService.removerCliente(id);
+			clienteService.remover(id);
 			return new ResponseEntity<>(OK);
 		} catch (ServiceException ex) {
 			return new ResponseEntity<>(NOT_FOUND);
 		}
-	} 
+	}
 
 	@RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Cliente> atualizar(@RequestBody Cliente cliente) {
 		log.info("atualizando cliente");
 
 		try {
-			cliente = clienteService.atualizarCliente(cliente);
+			cliente = clienteService.atualizar(cliente);
 			return new ResponseEntity<>(cliente, OK);
 		} catch (ServiceException ex) {
 			return new ResponseEntity<>(NOT_FOUND);
