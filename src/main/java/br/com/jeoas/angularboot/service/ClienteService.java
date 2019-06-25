@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.jeoas.angularboot.entity.Cliente;
+import br.com.jeoas.angularboot.exception.ServiceException;
 import br.com.jeoas.angularboot.repository.ClienteRepository;
 
 @Service 
@@ -25,29 +26,26 @@ public class ClienteService {
 		return clienteRepository.findAll();
 	}
 
-	public Cliente consultarCliente(Integer id) throws Exception {
+	public Cliente consultarCliente(Integer id) throws ServiceException {
 		Optional<Cliente> optional = clienteRepository.findById(id);
 		
 		if(optional.isPresent()) {
 			return optional.get();
 		}
 		
-		throw new Exception();
+		throw new ServiceException();
 	}
 	
 	
-	public void removerCliente(Integer id) throws Exception {
-		Optional<Cliente> optional = clienteRepository.findById(id);
-		
-		if(optional.isPresent()) {
-			clienteRepository.delete(new Cliente(id));
-			
+	public void removerCliente(Integer id) throws ServiceException {
+		if(clienteRepository.existsById(id)) {
+			clienteRepository.deleteById(id);
 		}else {
-			throw new Exception();
+			throw new ServiceException();
 		}
 	} 
 
-	public Cliente atualizarCliente(Cliente cliente) throws Exception {
+	public Cliente atualizarCliente(Cliente cliente) throws ServiceException {
 		Optional<Cliente> optional = clienteRepository.findById(cliente.getId());
 		
 		if(optional.isPresent()) {
@@ -58,7 +56,7 @@ public class ClienteService {
 			return clienteBanco; 
 		}
  		
-		throw new Exception();
+		throw new ServiceException();
 	}
 }
 
