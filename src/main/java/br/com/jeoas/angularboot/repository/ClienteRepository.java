@@ -14,4 +14,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	@Query("select c from Cliente c where c.idade >= 18")
 	public List<Cliente> findMaiorIdade();
 	
+	@Query("select c from Cliente c where c.idade < 18")
+	public List<Cliente> findMenorIdade();
+	
 }

@@ -1,4 +1,4 @@
-package br.com.jeoas.angularboot.controller.advice;
+package br.com.jeoas.angularboot.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
