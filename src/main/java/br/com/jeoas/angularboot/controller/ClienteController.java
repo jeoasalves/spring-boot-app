@@ -50,6 +50,14 @@ public class ClienteController {
 		List<Cliente> clientes = clienteService.pesquisarClientesAdultos();
 		return new ResponseEntity<List<Cliente>>(clientes, OK);
 	}
+	
+	@GetMapping(value = "/menores")
+	public ResponseEntity<List<Cliente>> pesquisarMenores() {
+		log.info("pesquisando clientes menores");
+
+		List<Cliente> clientes = clienteService.pesquisarClientesMenores();
+		return new ResponseEntity<List<Cliente>>(clientes, OK);
+	}
 
 	@PostMapping
 	private ResponseEntity<Cliente> salvar(@RequestBody Cliente cliente) {

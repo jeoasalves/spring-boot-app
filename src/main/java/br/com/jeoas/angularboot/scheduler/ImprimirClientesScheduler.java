@@ -19,7 +19,7 @@ public class ImprimirClientesScheduler {
     
     @Scheduled(cron = "*/10 * * * * *")
     public void executar() { 
-        log.warn("Quantidade de clientes menores de idade: [" + clienteRepository.findMenorIdade().size() + "]");
-        log.info("Quantidade de clientes adultos: [" + clienteRepository.findMaiorIdade().size() + "]");
+        log.warn("Quantidade de clientes menores de idade: [" + clienteRepository.getQuantidadeMenorIdade() + "]");
+        log.info("Quantidade de clientes adultos: [" + clienteRepository.getQuantidadeMaiorIdade() + "]");
     }
 }

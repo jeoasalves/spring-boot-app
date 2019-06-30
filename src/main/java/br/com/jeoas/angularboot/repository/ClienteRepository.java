@@ -17,4 +17,10 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	@Query("select c from Cliente c where c.idade < 18")
 	public List<Cliente> findMenorIdade();
 	
+	@Query("select count(c.id) from Cliente c where c.idade >= 18")
+	public Long getQuantidadeMaiorIdade();
+	
+	@Query("select count(c.id) from Cliente c where c.idade < 18")
+	public Long getQuantidadeMenorIdade();
+
 }

@@ -38,8 +38,11 @@ public class ClienteService {
 	}
 
 	public List<Cliente> pesquisarClientesAdultos() {
-		List<Cliente> clientes = clienteRepository.findMaiorIdade();
-		return clientes;
+		return clienteRepository.findMaiorIdade();
+	}
+
+	public List<Cliente> pesquisarClientesMenores() {
+		return clienteRepository.findMenorIdade();
 	}
 
 	public void remover(Integer id) throws ClienteNaoEncontradoException {
