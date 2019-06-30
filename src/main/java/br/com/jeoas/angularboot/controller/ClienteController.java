@@ -1,24 +1,22 @@
 package br.com.jeoas.angularboot.controller;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jeoas.angularboot.entity.Cliente;
-import br.com.jeoas.angularboot.exception.ServiceException;
 import br.com.jeoas.angularboot.service.ClienteService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,53 +28,49 @@ public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
 
-	@RequestMapping(method = GET, produces = APPLICATION_JSON_VALUE)
+	@GetMapping
 	public ResponseEntity<Collection<Cliente>> listar() {
 		log.info("listando clientes");
 		Collection<Cliente> clientes = clienteService.listar();
 		return new ResponseEntity<Collection<Cliente>>(clientes, OK);
 	}
 
-	@RequestMapping(method = GET, value = "/{id}", produces = APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Cliente> consultar(@PathVariable Integer id) {
 		log.info("consultando cliente");
 
-		try {
-			Cliente cliente = clienteService.consultar(id);
-			return new ResponseEntity<Cliente>(cliente, OK);
-		} catch (ServiceException ex) {
-			return new ResponseEntity<>(NOT_FOUND);
-		}
+		Cliente cliente = clienteService.consultar(id);
+		return new ResponseEntity<Cliente>(cliente, OK);
 	}
 
-	@RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/adultos")
+	public ResponseEntity<List<Cliente>> pesquisarClientesAdultos() {
+		log.info("pesquisando clientes adultos");
+
+		List<Cliente> clientes = clienteService.pesquisarClientesAdultos();
+		return new ResponseEntity<List<Cliente>>(clientes, OK);
+	}
+
+	@PostMapping
 	private ResponseEntity<Cliente> salvar(@RequestBody Cliente cliente) {
 		log.info("salvando cliente");
 		cliente = clienteService.salvar(cliente);
 		return new ResponseEntity<Cliente>(cliente, OK);
 	}
 
-	@RequestMapping(method = DELETE, value = "/{id}")
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Cliente> remover(@PathVariable Integer id) {
 		log.info("removendo cliente");
 
-		try {
-			clienteService.remover(id);
-			return new ResponseEntity<>(OK);
-		} catch (ServiceException ex) {
-			return new ResponseEntity<>(NOT_FOUND);
-		}
+		clienteService.remover(id);
+		return new ResponseEntity<>(OK);
 	}
 
-	@RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@PutMapping
 	public ResponseEntity<Cliente> atualizar(@RequestBody Cliente cliente) {
 		log.info("atualizando cliente");
 
-		try {
-			cliente = clienteService.atualizar(cliente);
-			return new ResponseEntity<>(cliente, OK);
-		} catch (ServiceException ex) {
-			return new ResponseEntity<>(NOT_FOUND);
-		}
+		cliente = clienteService.atualizar(cliente);
+		return new ResponseEntity<>(cliente, OK);
 	}
 }
